@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — Lifedent Pakistan</title>
+  <meta name="description" content="Browse our complete range of dental equipment: dental units, autoclaves, X-ray machines, compressors, suction motors, and dental instruments.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div>
+          <img src="images/logo.png" alt="Lifedent Pakistan" class="logo-img">
+          <span class="logo-sub">Your Lifetime Dental Partner</span>
+        </div>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn btn-primary">Get a Quote</a>
+      </nav>
+      <button class="mobile-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <span class="section-tag" style="color:var(--blue);">Our Products</span>
+      <h1>Dental Equipment Catalog</h1>
+      <p>High-quality dental units, sterilizers, imaging equipment, and accessories for modern dental practices.</p>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="section">
+    <div class="container">
+      <div id="category-filters" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px; justify-content:center;"></div>
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Need Custom Equipment Packages?</h2>
+      <p>We offer complete dental clinic setup packages tailored to your specific needs and budget.</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/923343435910?text=Hi, I need a custom dental equipment quote" target="_blank" class="btn btn-gold"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Request Custom Quote</a>
+        <a href="contact.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3); color:white;">Contact Form →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="logo-text" style="color:white; margin-bottom:12px;">lifedent <span style="color:var(--blue);">pakistan</span></div>
+          <p>Official distributor of Lifedent China dental equipment in Pakistan.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Products</h4>
+          <ul class="footer-links">
+            <li><a href="products.html">Dental Units</a></li>
+            <li><a href="products.html">Autoclaves</a></li>
+            <li><a href="products.html">X-Ray Equipment</a></li>
+            <li><a href="products.html">Compressors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="tel:03343435910">0334-3435910</a></li>
+            <li><a href="tel:03436661555">0343-6661555</a></li>
+            <li><a href="tel:03137167094">0313-7167094</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Lifedent Pakistan. All rights reserved. <span class="powered-by">| Powered by <a href="https://tieconic.com" target="_blank" rel="noopener">TIECONIC</a></span></p>
+        <a href="admin.html">Admin Dashboard</a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/923343435910" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">💬</a>
+
+  <!-- Product Modal -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal modal-content"></div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

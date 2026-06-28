@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Lifedent Pakistan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="logo-area">
+        <h3 style="margin-bottom:2px;">lifedent <span style="color:var(--blue);">pakistan</span></h3>
+        <span>Admin Dashboard</span>
+      </div>
+      <ul class="admin-nav">
+        <li><a href="#" data-section="dashboard-section" class="active" onclick="showSection('dashboard-section')">📊 &nbsp; Dashboard</a></li>
+        <li><a href="#" data-section="products-section" onclick="showSection('products-section')">📦 &nbsp; Products</a></li>
+        <li><a href="#" data-section="settings-section" onclick="showSection('settings-section')">⚙️ &nbsp; Settings</a></li>
+        <li style="margin-top:auto; border-top:1px solid rgba(255,255,255,0.1); padding-top:16px;">
+          <a href="index.html">🌐 &nbsp; View Website</a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- Dashboard Section -->
+      <div id="dashboard-section" class="admin-section">
+        <div class="admin-topbar">
+          <div>
+            <h1>Dashboard</h1>
+            <p style="color:var(--gray-500); font-size:0.9rem;">Welcome to Lifedent Pakistan admin panel</p>
+          </div>
+          <a href="index.html" class="btn btn-outline btn-sm">🌐 View Website</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin-stats">
+          <div class="admin-stat-card">
+            <div class="label">Total Products</div>
+            <div class="value" id="stat-total">0</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="label">Active Products</div>
+            <div class="value" id="stat-active">0</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="label">Categories</div>
+            <div class="value" id="stat-categories">0</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="admin-table-wrap" style="margin-bottom:24px;">
+          <div class="admin-table-header">
+            <h3>Quick Actions</h3>
+          </div>
+          <div style="padding:24px; display:flex; gap:12px; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="showSection('products-section'); setTimeout(showAddForm, 100);">+ Add New Product</button>
+            <a href="products.html" target="_blank" class="btn btn-outline">View Product Page</a>
+            <button class="btn btn-outline" onclick="resetProducts()">🔄 Reset to Default</button>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="admin-table-wrap">
+          <div class="admin-table-header">
+            <h3>Manage Products</h3>
+          </div>
+          <div style="padding:24px;">
+            <p style="color:var(--gray-500);">Go to the <a href="#" onclick="showSection('products-section'); return false;" style="font-weight:600;">Products section</a> to view, edit, and manage all products in your catalog.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Section -->
+      <div id="products-section" class="admin-section" style="display:none;">
+        <div class="admin-topbar">
+          <div>
+            <h1>Manage Products</h1>
+            <p style="color:var(--gray-500); font-size:0.9rem;">Add, edit, or remove products from your catalog</p>
+          </div>
+          <button class="btn btn-primary" onclick="showAddForm()">+ Add New Product</button>
+        </div>
+
+        <!-- Add/Edit Form -->
+        <div id="product-form-section" class="admin-form-wrap" style="display:none; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+            <h3 id="form-title">Add New Product</h3>
+            <button class="btn btn-sm btn-outline" onclick="hideForm()">✕ Cancel</button>
+          </div>
+          <form id="product-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Product Name *</label>
+                <input type="text" id="prod-name" required placeholder="e.g. P3-i Dental Unit">
+              </div>
+              <div class="form-group">
+                <label>Category *</label>
+                <input type="text" id="prod-category" required placeholder="e.g. Dental Units, Autoclave, X-Ray" list="categories-list">
+                <datalist id="categories-list">
+                  <option value="Dental Units">
+                  <option value="Autoclave">
+                  <option value="X-Ray">
+                  <option value="Compressor">
+                  <option value="Suction">
+                  <option value="Dental Instruments">
+                  <option value="Dental Implants">
+                </datalist>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Brand</label>
+                <input type="text" id="prod-brand" placeholder="e.g. Lifedent China">
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select id="prod-status">
+                  <option value="active">Active</option>
+                  <option value="draft">Draft</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Image</label>
+              <div style="display:flex; gap:12px; align-items:start; flex-wrap:wrap;">
+                <input type="text" id="prod-image" placeholder="Image path (e.g. images/product.jpg) or upload below" style="flex:1; min-width:200px;">
+                <label class="btn btn-sm btn-outline" style="cursor:pointer;">
+                  📷 Upload Image
+                  <input type="file" id="prod-image-file" accept="image/*" style="display:none;">
+                </label>
+              </div>
+              <div id="image-preview"></div>
+            </div>
+            <div class="form-group">
+              <label>Description *</label>
+              <textarea id="prod-description" required placeholder="Detailed product description..." style="min-height:100px;"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Specifications</label>
+              <textarea id="prod-specs" placeholder="Key specs separated by | (pipe)" style="min-height:70px;"></textarea>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:8px;">
+              <button type="submit" class="btn btn-primary" id="form-submit-btn">Add Product</button>
+              <button type="button" class="btn btn-outline" onclick="hideForm()">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Products Table -->
+        <div class="admin-table-wrap">
+          <div class="admin-table-header">
+            <h3>Product Catalog</h3>
+            <span style="font-size:0.85rem; color:var(--gray-500);">Products are stored in your browser (localStorage)</span>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Brand</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-products-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Section -->
+      <div id="settings-section" class="admin-section" style="display:none;">
+        <div class="admin-topbar">
+          <h1>Settings</h1>
+        </div>
+        <div class="admin-form-wrap">
+          <h3 style="margin-bottom:16px;">Data Management</h3>
+          <p style="margin-bottom:20px; color:var(--gray-500);">Products are stored in your browser's localStorage. Use these options to manage your data.</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button class="btn btn-outline" onclick="exportProducts()">📥 Export Products (JSON)</button>
+            <label class="btn btn-outline" style="cursor:pointer;">
+              📤 Import Products (JSON)
+              <input type="file" accept=".json" onchange="importProducts(this)" style="display:none;">
+            </label>
+            <button class="btn btn-danger" onclick="resetProducts()">🔄 Reset to Default</button>
+          </div>
+        </div>
+        <div class="admin-form-wrap" style="margin-top:24px;">
+          <h3 style="margin-bottom:16px;">About This Dashboard</h3>
+          <p style="color:var(--gray-500);">This is a client-side admin dashboard for Lifedent Pakistan. Products are managed via localStorage which means data persists across sessions but only on this browser/device.</p>
+          <p style="color:var(--gray-500); margin-top:8px;">For a production setup with database storage, consider migrating to a server-side solution with Supabase or Firebase.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    // Export products as JSON file
+    function exportProducts() {
+      const products = ProductManager.getProducts();
+      const blob = new Blob([JSON.stringify(products, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'lifedent-products.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Products exported', 'success');
+    }
+    
+    // Import products from JSON file
+    function importProducts(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const products = JSON.parse(e.target.result);
+          if (Array.isArray(products)) {
+            ProductManager.saveProducts(products);
+            renderAdminProducts();
+            showToast('Products imported (' + products.length + ' items)', 'success');
+          } else {
+            showToast('Invalid file format', 'error');
+          }
+        } catch(err) {
+          showToast('Error reading file', 'error');
+        }
+      };
+      reader.readAsText(file);
+    }
+  </script>
+</body>
+</html>
