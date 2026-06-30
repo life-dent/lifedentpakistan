@@ -9,100 +9,156 @@
 </head>
 <body>
 
-  <div class="admin-layout">
+  <!-- ===== LOGIN SCREEN ===== -->
+  <div id="admin-login" class="admin-login-overlay">
+    <div class="admin-login-box">
+      <img src="images/logo.png" alt="Lifedent Pakistan" onerror="this.style.display='none'">
+      <h2>Admin Access</h2>
+      <p>Enter your password to access the dashboard</p>
+      <form id="login-form" onsubmit="adminLogin(event)" novalidate>
+        <div class="form-group" style="text-align:left; margin-bottom:16px;">
+          <label for="admin-password">Password</label>
+          <input type="password" id="admin-password" placeholder="Enter admin password" autocomplete="current-password">
+          <span class="err" id="login-err">Incorrect password. Please try again.</span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== MOBILE TOP BAR ===== -->
+  <div class="admin-mobile-bar" id="admin-mobile-bar">
+    <div class="mobile-logo">
+      <img src="images/logo.png" alt="" onerror="this.style.display='none'">
+      <span>Admin Panel</span>
+    </div>
+    <button class="sidebar-toggle-btn" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Sidebar Overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- ===== ADMIN LAYOUT ===== -->
+  <div class="admin-layout" id="admin-layout" style="display:none;">
+
     <!-- Sidebar -->
-    <aside class="admin-sidebar">
+    <aside class="admin-sidebar" id="admin-sidebar">
       <div class="logo-area">
-        <h3 style="margin-bottom:2px;">lifedent <span style="color:var(--blue);">pakistan</span></h3>
-        <span>Admin Dashboard</span>
+        <img src="images/logo.png" alt="Lifedent Pakistan" onerror="this.style.display='none'">
+        <div class="logo-name">lifedent <span>pakistan</span></div>
+        <span class="logo-tag">Admin Dashboard</span>
       </div>
       <ul class="admin-nav">
-        <li><a href="#" data-section="dashboard-section" class="active" onclick="showSection('dashboard-section')">📊 &nbsp; Dashboard</a></li>
-        <li><a href="#" data-section="products-section" onclick="showSection('products-section')">📦 &nbsp; Products</a></li>
-        <li><a href="#" data-section="settings-section" onclick="showSection('settings-section')">⚙️ &nbsp; Settings</a></li>
-        <li style="margin-top:auto; border-top:1px solid rgba(255,255,255,0.1); padding-top:16px;">
-          <a href="index.html">🌐 &nbsp; View Website</a>
+        <li>
+          <a href="#" data-section="dashboard-section" class="active" onclick="showSection('dashboard-section')">
+            <span class="nav-icon">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#" data-section="products-section" onclick="showSection('products-section')">
+            <span class="nav-icon">📦</span> Products
+          </a>
+        </li>
+        <li>
+          <a href="#" data-section="settings-section" onclick="showSection('settings-section')">
+            <span class="nav-icon">⚙️</span> Settings
+          </a>
         </li>
       </ul>
+      <div class="admin-nav-footer">
+        <ul class="admin-nav" style="padding:4px 0;">
+          <li><a href="index.html" target="_blank"><span class="nav-icon">🌐</span> View Website</a></li>
+        </ul>
+        <button class="admin-logout-btn" onclick="adminLogout()">
+          <span class="nav-icon">🚪</span> Logout
+        </button>
+      </div>
     </aside>
 
     <!-- Main Content -->
     <main class="admin-main">
 
-      <!-- Dashboard Section -->
+      <!-- ===== DASHBOARD ===== -->
       <div id="dashboard-section" class="admin-section">
         <div class="admin-topbar">
           <div>
             <h1>Dashboard</h1>
-            <p style="color:var(--gray-500); font-size:0.9rem;">Welcome to Lifedent Pakistan admin panel</p>
+            <p class="topbar-sub">Welcome back to Lifedent Pakistan admin</p>
           </div>
-          <a href="index.html" class="btn btn-outline btn-sm">🌐 View Website</a>
+          <a href="index.html" target="_blank" class="btn btn-outline btn-sm">🌐 View Site</a>
         </div>
 
-        <!-- Stats -->
         <div class="admin-stats">
           <div class="admin-stat-card">
-            <div class="label">Total Products</div>
-            <div class="value" id="stat-total">0</div>
+            <div class="admin-stat-icon">📦</div>
+            <div class="admin-stat-info">
+              <div class="label">Total Products</div>
+              <div class="value" id="stat-total">0</div>
+            </div>
           </div>
           <div class="admin-stat-card">
-            <div class="label">Active Products</div>
-            <div class="value" id="stat-active">0</div>
+            <div class="admin-stat-icon">✅</div>
+            <div class="admin-stat-info">
+              <div class="label">Active</div>
+              <div class="value" id="stat-active">0</div>
+            </div>
           </div>
           <div class="admin-stat-card">
-            <div class="label">Categories</div>
-            <div class="value" id="stat-categories">0</div>
+            <div class="admin-stat-icon">🗂️</div>
+            <div class="admin-stat-info">
+              <div class="label">Categories</div>
+              <div class="value" id="stat-categories">0</div>
+            </div>
           </div>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="admin-table-wrap" style="margin-bottom:24px;">
-          <div class="admin-table-header">
-            <h3>Quick Actions</h3>
-          </div>
-          <div style="padding:24px; display:flex; gap:12px; flex-wrap:wrap;">
-            <button class="btn btn-primary" onclick="showSection('products-section'); setTimeout(showAddForm, 100);">+ Add New Product</button>
-            <a href="products.html" target="_blank" class="btn btn-outline">View Product Page</a>
-            <button class="btn btn-outline" onclick="resetProducts()">🔄 Reset to Default</button>
+        <div class="admin-table-wrap" style="margin-bottom:20px;">
+          <div class="admin-table-header"><h3>Quick Actions</h3></div>
+          <div class="quick-actions">
+            <button class="btn btn-primary btn-sm" onclick="showSection('products-section'); setTimeout(showAddForm, 100)">+ Add Product</button>
+            <a href="products.html" target="_blank" class="btn btn-outline btn-sm">View Products Page</a>
+            <button class="btn btn-outline btn-sm" onclick="resetProducts()">🔄 Reset Data</button>
           </div>
         </div>
 
-        <!-- Info -->
         <div class="admin-table-wrap">
-          <div class="admin-table-header">
-            <h3>Manage Products</h3>
-          </div>
-          <div style="padding:24px;">
-            <p style="color:var(--gray-500);">Go to the <a href="#" onclick="showSection('products-section'); return false;" style="font-weight:600;">Products section</a> to view, edit, and manage all products in your catalog.</p>
+          <div class="admin-table-header"><h3>Getting Started</h3></div>
+          <div style="padding:20px 24px;">
+            <p style="color:var(--gray-500); font-size:0.875rem;">
+              Go to the <a href="#" onclick="showSection('products-section'); return false;" style="color:var(--blue); font-weight:600;">Products</a> section to add, edit, or remove dental equipment. Changes appear live on the website immediately.
+            </p>
           </div>
         </div>
       </div>
 
-      <!-- Products Section -->
+      <!-- ===== PRODUCTS ===== -->
       <div id="products-section" class="admin-section" style="display:none;">
         <div class="admin-topbar">
           <div>
             <h1>Manage Products</h1>
-            <p style="color:var(--gray-500); font-size:0.9rem;">Add, edit, or remove products from your catalog</p>
+            <p class="topbar-sub">Add, edit, or remove products from your catalog</p>
           </div>
-          <button class="btn btn-primary" onclick="showAddForm()">+ Add New Product</button>
+          <button class="btn btn-primary btn-sm" onclick="showAddForm()">+ Add Product</button>
         </div>
 
-        <!-- Add/Edit Form -->
-        <div id="product-form-section" class="admin-form-wrap" style="display:none; margin-bottom:24px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+        <!-- Add / Edit Form -->
+        <div id="product-form-section" class="admin-form-wrap" style="display:none; margin-bottom:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
             <h3 id="form-title">Add New Product</h3>
             <button class="btn btn-sm btn-outline" onclick="hideForm()">✕ Cancel</button>
           </div>
-          <form id="product-form">
+          <form id="product-form" novalidate>
             <div class="form-row">
               <div class="form-group">
-                <label>Product Name *</label>
-                <input type="text" id="prod-name" required placeholder="e.g. P3-i Dental Unit">
+                <label>Product Name <span style="color:var(--red)">*</span></label>
+                <input type="text" id="prod-name" placeholder="e.g. P3-i Dental Unit">
+                <span class="err" id="err-name">Product name is required</span>
               </div>
               <div class="form-group">
-                <label>Category *</label>
-                <input type="text" id="prod-category" required placeholder="e.g. Dental Units, Autoclave, X-Ray" list="categories-list">
+                <label>Category <span style="color:var(--red)">*</span></label>
+                <input type="text" id="prod-category" placeholder="e.g. Dental Units" list="categories-list">
                 <datalist id="categories-list">
                   <option value="Dental Units">
                   <option value="Autoclave">
@@ -112,6 +168,7 @@
                   <option value="Dental Instruments">
                   <option value="Dental Implants">
                 </datalist>
+                <span class="err" id="err-category">Category is required</span>
               </div>
             </div>
             <div class="form-row">
@@ -122,31 +179,32 @@
               <div class="form-group">
                 <label>Status</label>
                 <select id="prod-status">
-                  <option value="active">Active</option>
-                  <option value="draft">Draft</option>
+                  <option value="active">Active — Visible on website</option>
+                  <option value="draft">Draft — Hidden from website</option>
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label>Image</label>
-              <div style="display:flex; gap:12px; align-items:start; flex-wrap:wrap;">
-                <input type="text" id="prod-image" placeholder="Image path (e.g. images/product.jpg) or upload below" style="flex:1; min-width:200px;">
-                <label class="btn btn-sm btn-outline" style="cursor:pointer;">
-                  📷 Upload Image
+              <label>Product Image</label>
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <input type="text" id="prod-image" placeholder="e.g. images/product.jpg" style="flex:1; min-width:160px;">
+                <label class="btn btn-sm btn-outline" style="cursor:pointer; margin:0; flex-shrink:0;">
+                  📷 Upload
                   <input type="file" id="prod-image-file" accept="image/*" style="display:none;">
                 </label>
               </div>
-              <div id="image-preview"></div>
+              <div id="image-preview" style="margin-top:10px;"></div>
             </div>
             <div class="form-group">
-              <label>Description *</label>
-              <textarea id="prod-description" required placeholder="Detailed product description..." style="min-height:100px;"></textarea>
+              <label>Description <span style="color:var(--red)">*</span></label>
+              <textarea id="prod-description" placeholder="Detailed product description..."></textarea>
+              <span class="err" id="err-description">Description is required</span>
             </div>
             <div class="form-group">
-              <label>Specifications</label>
-              <textarea id="prod-specs" placeholder="Key specs separated by | (pipe)" style="min-height:70px;"></textarea>
+              <label>Specifications <span style="color:var(--gray-500); font-weight:400; font-size:0.8rem;">(separate with |)</span></label>
+              <textarea id="prod-specs" placeholder="e.g. 40L Tank | 850W | Oil-Free | Low Noise" style="min-height:70px;"></textarea>
             </div>
-            <div style="display:flex; gap:12px; margin-top:8px;">
+            <div style="display:flex; gap:12px; margin-top:8px; flex-wrap:wrap;">
               <button type="submit" class="btn btn-primary" id="form-submit-btn">Add Product</button>
               <button type="button" class="btn btn-outline" onclick="hideForm()">Cancel</button>
             </div>
@@ -157,7 +215,7 @@
         <div class="admin-table-wrap">
           <div class="admin-table-header">
             <h3>Product Catalog</h3>
-            <span style="font-size:0.85rem; color:var(--gray-500);">Products are stored in your browser (localStorage)</span>
+            <span style="font-size:0.78rem; color:var(--gray-500);">Stored in browser localStorage</span>
           </div>
           <div style="overflow-x:auto;">
             <table class="admin-table">
@@ -177,27 +235,49 @@
         </div>
       </div>
 
-      <!-- Settings Section -->
+      <!-- ===== SETTINGS ===== -->
       <div id="settings-section" class="admin-section" style="display:none;">
         <div class="admin-topbar">
           <h1>Settings</h1>
         </div>
+
         <div class="admin-form-wrap">
-          <h3 style="margin-bottom:16px;">Data Management</h3>
-          <p style="margin-bottom:20px; color:var(--gray-500);">Products are stored in your browser's localStorage. Use these options to manage your data.</p>
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <button class="btn btn-outline" onclick="exportProducts()">📥 Export Products (JSON)</button>
-            <label class="btn btn-outline" style="cursor:pointer;">
-              📤 Import Products (JSON)
+          <h3 style="margin-bottom:6px;">Data Management</h3>
+          <p style="color:var(--gray-500); font-size:0.875rem; margin-bottom:20px;">Export or import your entire product catalog as a JSON file.</p>
+          <div class="quick-actions" style="padding:0;">
+            <button class="btn btn-outline btn-sm" onclick="exportProducts()">📥 Export JSON</button>
+            <label class="btn btn-outline btn-sm" style="cursor:pointer;">
+              📤 Import JSON
               <input type="file" accept=".json" onchange="importProducts(this)" style="display:none;">
             </label>
-            <button class="btn btn-danger" onclick="resetProducts()">🔄 Reset to Default</button>
+            <button class="btn btn-danger btn-sm" onclick="resetProducts()">🔄 Reset to Default</button>
           </div>
         </div>
-        <div class="admin-form-wrap" style="margin-top:24px;">
-          <h3 style="margin-bottom:16px;">About This Dashboard</h3>
-          <p style="color:var(--gray-500);">This is a client-side admin dashboard for Lifedent Pakistan. Products are managed via localStorage which means data persists across sessions but only on this browser/device.</p>
-          <p style="color:var(--gray-500); margin-top:8px;">For a production setup with database storage, consider migrating to a server-side solution with Supabase or Firebase.</p>
+
+        <div class="admin-form-wrap" style="margin-top:20px;">
+          <h3 style="margin-bottom:6px;">Change Admin Password</h3>
+          <p style="color:var(--gray-500); font-size:0.875rem; margin-bottom:16px;">Update the password used to log in to this admin panel.</p>
+          <form id="change-password-form" onsubmit="changeAdminPassword(event)" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Current Password</label>
+                <input type="password" id="current-pass" placeholder="Enter current password">
+                <span class="err" id="err-current-pass">Incorrect current password</span>
+              </div>
+              <div class="form-group">
+                <label>New Password</label>
+                <input type="password" id="new-pass" placeholder="New password (min 6 chars)">
+                <span class="err" id="err-new-pass">Must be at least 6 characters</span>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm" style="margin-top:4px;">Update Password</button>
+          </form>
+        </div>
+
+        <div class="admin-form-wrap" style="margin-top:20px;">
+          <h3 style="margin-bottom:6px;">About This Dashboard</h3>
+          <p style="color:var(--gray-500); font-size:0.875rem;">Lifedent Pakistan admin panel — client-side only. Products are stored in this browser's localStorage and persist across sessions on this device.</p>
+          <p style="color:var(--gray-500); font-size:0.875rem; margin-top:8px;">For multi-device or cloud storage, consider integrating Supabase or Firebase.</p>
         </div>
       </div>
 
@@ -207,38 +287,68 @@
   <script src="js/main.js"></script>
   <script src="js/admin.js"></script>
   <script>
-    // Export products as JSON file
     function exportProducts() {
-      const products = ProductManager.getProducts();
-      const blob = new Blob([JSON.stringify(products, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'lifedent-products.json';
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('Products exported', 'success');
+      try {
+        const products = ProductManager.getProducts();
+        const blob = new Blob([JSON.stringify(products, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'lifedent-products.json';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Exported ' + products.length + ' products', 'success');
+      } catch(e) {
+        showToast('Export failed', 'error');
+      }
     }
-    
-    // Import products from JSON file
+
     function importProducts(input) {
       const file = input.files[0];
       if (!file) return;
+      if (!file.name.endsWith('.json')) { showToast('Please select a .json file', 'error'); return; }
       const reader = new FileReader();
       reader.onload = function(e) {
         try {
-          const products = JSON.parse(e.target.result);
-          if (Array.isArray(products)) {
-            ProductManager.saveProducts(products);
-            renderAdminProducts();
-            showToast('Products imported (' + products.length + ' items)', 'success');
-          } else {
-            showToast('Invalid file format', 'error');
-          }
+          const data = JSON.parse(e.target.result);
+          if (!Array.isArray(data)) { showToast('Invalid format: expected an array', 'error'); return; }
+          ProductManager.saveProducts(data);
+          renderAdminProducts();
+          showToast('Imported ' + data.length + ' products', 'success');
         } catch(err) {
-          showToast('Error reading file', 'error');
+          showToast('Invalid JSON file', 'error');
         }
       };
+      reader.onerror = () => showToast('Failed to read file', 'error');
       reader.readAsText(file);
+      input.value = '';
+    }
+
+    function changeAdminPassword(e) {
+      e.preventDefault();
+      const currentPass = document.getElementById('current-pass').value;
+      const newPass = document.getElementById('new-pass').value;
+      const errCurrent = document.getElementById('err-current-pass');
+      const errNew = document.getElementById('err-new-pass');
+      const inputCurrent = document.getElementById('current-pass');
+      const inputNew = document.getElementById('new-pass');
+
+      errCurrent.classList.remove('show'); inputCurrent.classList.remove('has-error');
+      errNew.classList.remove('show'); inputNew.classList.remove('has-error');
+
+      let valid = true;
+      if (currentPass !== getAdminPassword()) {
+        errCurrent.classList.add('show'); inputCurrent.classList.add('has-error');
+        valid = false;
+      }
+      if (newPass.length < 6) {
+        errNew.classList.add('show'); inputNew.classList.add('has-error');
+        valid = false;
+      }
+      if (!valid) return;
+
+      setAdminPassword(newPass);
+      document.getElementById('change-password-form').reset();
+      showToast('Password updated successfully', 'success');
     }
   </script>
 </body>
