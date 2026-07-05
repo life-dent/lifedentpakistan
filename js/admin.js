@@ -186,6 +186,7 @@ function editProduct(id) {
   document.getElementById('prod-category').value = product.category || '';
   document.getElementById('prod-brand').value = product.brand || '';
   document.getElementById('prod-image').value = product.image || '';
+  document.getElementById('prod-video').value = product.video || '';
   document.getElementById('prod-description').value = product.description || '';
   document.getElementById('prod-specs').value = product.specs || '';
   document.getElementById('prod-status').value = product.status || 'active';
@@ -250,6 +251,7 @@ function handleProductSubmit(e) {
     category,
     brand: document.getElementById('prod-brand').value.trim(),
     image: document.getElementById('prod-image').value.trim(),
+    video: document.getElementById('prod-video').value.trim(),
     description,
     specs: document.getElementById('prod-specs').value.trim(),
     status: document.getElementById('prod-status').value
